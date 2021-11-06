@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using SocialNetworkSecondTry.Models.Users
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager;
+
+@model SocialNetworkSecondTry.ViewModels.MainViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    //редирект
+
+}
+else
+{
+
+
+    <div class="row">
+        <div class="side">
+            <div class="center">
+                Вторая попытка по созданию соц сети. Поэтому брокколи
+            </div>
+            <img class="main-img" src="https://pngimg.com/uploads/broccoli/broccoli_PNG72962.png" />
+        </div>
+
+
+        <div class="main">
+            <partial name="Login" model="@Model.LoginView" />
+            <partial name="Register" model="@Model.RegisterView"/>
+        </div>
+
+    </div>
+
+}
