@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SocialNetworkSecondTry.Models.Users;
 
@@ -14,7 +15,7 @@ namespace SocialNetworkSecondTry.Data.Repository
         }
 
 
-        public void AddFriend(User target, User Friend)
+        public async void AddFriend(User target, User Friend)
         {
             var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == Friend.Id);
 
@@ -27,8 +28,7 @@ namespace SocialNetworkSecondTry.Data.Repository
                     CurrentFriend = Friend,
                     CurrentFriendId = Friend.Id,
                 };
-
-                Create(item);
+                await Task.Run(() => Create(item));
             }
         }
 
@@ -40,14 +40,15 @@ namespace SocialNetworkSecondTry.Data.Repository
         }
 
 
-        public void DeleteFriend(User target, User Friend)
+        public async void DeleteFriend(User target, User Friend)
         {
             var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == Friend.Id);
 
             if (friends != null)
             {
-                Delete(friends);
+                await Task.Run(() => Delete(friends));
             }
+
         }
 
     }
